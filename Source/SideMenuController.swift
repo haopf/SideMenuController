@@ -170,7 +170,11 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
     }()
     
     var screenSize: CGSize {
-        return self.view.frame.size
+        if (self.view.frame.size.width < self.view.frame.size.height) {
+            return self.view.frame.size
+        }
+        
+        return CGSize.init(width: self.view.frame.size.height, height: self.view.frame.size.width)
     }
     
     // MARK:- View lifecycle -
@@ -207,7 +211,7 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
         super.viewWillTransition(to: size, with: coordinator)
         
         coordinator.animate(alongsideTransition: { _ in
-            self.repositionViews()
+//            self.repositionViews()
         }, completion: nil)
     }
     
@@ -460,4 +464,24 @@ open class SideMenuController: UIViewController, UIGestureRecognizerDelegate {
         
         return sidePanelFrame
     }
+    
+    //MARK: - disalbe auto rotate
+    open override var shouldAutorotate: Bool {
+        get {
+            return false
+        }
+    }
+    
+    open override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        get {
+            return .portrait
+        }
+    }
+    
+    open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .portrait
+        }
+    }
+
 }
